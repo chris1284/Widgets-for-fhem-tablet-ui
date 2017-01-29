@@ -27,7 +27,7 @@ var Modul_calview = function () {
             elem.initData('get', 'STATE');
             elem.initData('start', 'all');
             elem.initData('color', '');
-            elem.initData('detail', ["bdate", "btime","bdatetimeiso", "summary", "location","edate","etime","edatetimeiso","source","age","description"]);
+            elem.initData('detail', ["bdate", "btime","bdatetimeiso", "summary", "location","edate","etime","edatetimeiso","source","age","description","daysleft"]);
             elem.initData('showempty', 'true');
 
             var device = $(this).data('device');
