@@ -120,13 +120,13 @@ var Modul_uwz = function () {
 						var colortranslation;
 						colortranslation = colormap[elem.getReading('Warn_'+i+'_uwzLevel').val];
 						while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}				
-						mytext += "<div class=\"hbox\" style=\"display:inline-block;margin:2px 4px;padding:4px;border-radius:4px;color:"+elem.data('fontcolor')+";background-color:"+colortranslation +";\">"; }
+						mytext += "<div class=\"hbox cell\" style=\"display:inline-block;margin:4px;border-radius:4px;color:"+elem.data('fontcolor')+";background-color:"+colortranslation +";\">"; }
 					else { mytext += "<div class=\"hbox\">"; }
 									
 					elem.data('detail').forEach(function(spalte) {
-						if (spalte == 'IconURL'){ mytext += "<div class=\"cell\"><img src=\"" + elem.getReading('Warn_'+i+'_'+spalte).val + "\" width=\""+elem.data('imgsize')+"\" height=\""+elem.data('imgsize')+"\ class=\"centered\"></div>"; }
-						if (spalte == 'ShortText'){ mytext += "<div class=\"left-align " + elem.data('shttxtstyle') + "\">" + elem.getReading('Warn_'+i+'_'+spalte).val ;}
-						if (spalte == 'LongText'){ mytext += "<div class=\"left-align " + elem.data('lngtxtstyle') + "\">" + elem.getReading('Warn_'+i+'_'+spalte).val;}
+						if (spalte == 'IconURL'){ mytext += "<div class=\"\" style=\"margin:4px 10px;\"><img src=\"" + elem.getReading('Warn_'+i+'_'+spalte).val + "\" width=\""+elem.data('imgsize')+"\" height=\""+elem.data('imgsize')+"\ class=\"centered\"></div>"; }
+						if (spalte == 'ShortText'){ mytext += "<div class=\"left-align " + elem.data('shttxtstyle') + "\" style=\"margin:4px 10px;\"\">" + elem.getReading('Warn_'+i+'_'+spalte).val ;}
+						if (spalte == 'LongText'){ mytext += "<div class=\"left-align " + elem.data('lngtxtstyle') + "\" style=\"margin:4px 10px;\"\">" + elem.getReading('Warn_'+i+'_'+spalte).val;}
 						if (spalte == 'WarnTime'){ mytext += elem.data('textdivider') + "Gültig vom " + elem.getReading('Warn_'+i+'_Start_Date').val + " " + elem.getReading('Warn_'+i+'_Start_Time').val + " Uhr bis "+ elem.getReading('Warn_'+i+'_End_Date').val + " " + elem.getReading('Warn_'+i+'_End_Time').val + " Uhr.";}				
 					});
 					mytext += "</div></div></div>";
