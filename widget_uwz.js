@@ -42,6 +42,7 @@ var Modul_uwz = function () {
 			var elem = $(this);
 			elem.initData('max'			, 10);
 			elem.initData('detail'		, ["WarnUWZLevel_Color", "uwzLevel", "IconURL", "ShortText", "LongText", "Start", "End", "WarnTime",]);
+			elem.initData('fontcolor'	, '#222222');
 			elem.initData('imgsize'		, 30);
 			elem.initData('lngtxtstyle'	, '');
 			elem.initData('shttxtstyle'	, '');
@@ -114,18 +115,18 @@ var Modul_uwz = function () {
 						var colortranslation;
 						colortranslation = colormap[elem.getReading('WarnUWZLevel_Color').val];
 						while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}
-						mytext += "<div class=\"cell\" style=\"display:inline-block;margin:2px 8px;border-radius:4px;color:#222222;background-color:"+colortranslation +";\">"; }
+						mytext += "<div class=\"hbox\" style=\"display:inline-block;margin:2px 8px;border-radius:4px;color:"+elem.data('fontcolor')+";background-color:"+colortranslation +";\">"; }
 					else if (typeof elem.getReading('Warn_'+i+'_uwzLevel').val != "undefined"){ 
 						var colortranslation;
 						colortranslation = colormap[elem.getReading('Warn_'+i+'_uwzLevel').val];
 						while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}				
-						mytext += "<div class=\"cell\" style=\"display:inline-block;margin:2px 8px;border-radius:4px;color:#222222;background-color:"+colortranslation +";\">"; }
-					else { mytext += "<div class=\"cell\">"; }
+						mytext += "<div class=\"hbox\" style=\"display:inline-block;margin:2px 4px;padding:4px;border-radius:4px;color:"+elem.data('fontcolor')+";background-color:"+colortranslation +";\">"; }
+					else { mytext += "<div class=\"hbox\">"; }
 									
 					elem.data('detail').forEach(function(spalte) {
-						if (spalte == 'IconURL'){ mytext += "<div class=\"col-1-5 inline cell\"><img src=\"" + elem.getReading('Warn_'+i+'_'+spalte).val + "\" width=\""+elem.data('imgsize')+"\" height=\""+elem.data('imgsize')+"\ class=\"cell centered\"></div>"; }
-						if (spalte == 'ShortText'){ mytext += "<div class=\"col-3-4 inline cell\"><div class=\"cell centered left-align " + elem.data('shttxtstyle') + "\">" + elem.getReading('Warn_'+i+'_'+spalte).val ;}
-						if (spalte == 'LongText'){ mytext += "<div class=\"col-3-4 inline cell\"><div class=\"cell centered left-align " + elem.data('lngtxtstyle') + "\">" + elem.getReading('Warn_'+i+'_'+spalte).val;}
+						if (spalte == 'IconURL'){ mytext += "<div class=\"cell\"><img src=\"" + elem.getReading('Warn_'+i+'_'+spalte).val + "\" width=\""+elem.data('imgsize')+"\" height=\""+elem.data('imgsize')+"\ class=\"centered\"></div>"; }
+						if (spalte == 'ShortText'){ mytext += "<div class=\"left-align " + elem.data('shttxtstyle') + "\">" + elem.getReading('Warn_'+i+'_'+spalte).val ;}
+						if (spalte == 'LongText'){ mytext += "<div class=\"left-align " + elem.data('lngtxtstyle') + "\">" + elem.getReading('Warn_'+i+'_'+spalte).val;}
 						if (spalte == 'WarnTime'){ mytext += elem.data('textdivider') + "Gültig vom " + elem.getReading('Warn_'+i+'_Start_Date').val + " " + elem.getReading('Warn_'+i+'_Start_Time').val + " Uhr bis "+ elem.getReading('Warn_'+i+'_End_Date').val + " " + elem.getReading('Warn_'+i+'_End_Time').val + " Uhr.";}				
 					});
 					mytext += "</div></div></div>";
