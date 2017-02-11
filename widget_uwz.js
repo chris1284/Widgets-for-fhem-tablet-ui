@@ -46,6 +46,7 @@ var Modul_uwz = function () {
 			elem.initData('imgsize'		, 30);
 			elem.initData('lngtxtstyle'	, '');
 			elem.initData('shttxtstyle'	, '');
+			elem.initData('swiperstyle'	, 'no');
 			elem.initData('textdivider'	, ' ');
 			elem.initData('WarnCount'	, 'WarnCount');
 
@@ -109,27 +110,62 @@ var Modul_uwz = function () {
 				while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}				
 				if ( count >= elem.data('max') ) { count = elem.data('max') - 1; } 
 				else { count = elem.getReading('WarnCount').val - 1;}
+				if(elem.data('swiperstyle') == 'no'){
+					for (var i = 0; i <= count; i++) {
+						if (typeof elem.getReading('WarnUWZLevel_Color').val != "undefined") { 
+							var colortranslation;
+							colortranslation = colormap[elem.getReading('WarnUWZLevel_Color').val];
+							while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}
+							mytext += "<div class=\"hbox\" style=\"display:inline-block;margin:2px 8px;border-radius:4px;color:"+elem.data('fontcolor')+";background-color:"+colortranslation +";\">"; }
+						else if (typeof elem.getReading('Warn_'+i+'_uwzLevel').val != "undefined"){ 
+							var colortranslation;
+							colortranslation = colormap[elem.getReading('Warn_'+i+'_uwzLevel').val];
+							while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}				
+							mytext += "<div class=\"hbox cell\" style=\"display:inline-block;margin:4px;border-radius:4px;color:"+elem.data('fontcolor')+";background-color:"+colortranslation +";\">"; }
+						else { mytext += "<div class=\"hbox\">"; }
+										
+						elem.data('detail').forEach(function(spalte) {
+							if (spalte == 'IconURL'){ mytext += "<div class=\"\" style=\"margin:4px 10px;\"><img src=\"" + elem.getReading('Warn_'+i+'_'+spalte).val + "\" width=\""+elem.data('imgsize')+"\" height=\""+elem.data('imgsize')+"\ class=\"centered\"></div>"; }
+							if (spalte == 'ShortText'){ mytext += "<div class=\"left-align " + elem.data('shttxtstyle') + "\" style=\"margin:4px 10px;\"\">" + elem.getReading('Warn_'+i+'_'+spalte).val ;}
+							if (spalte == 'LongText'){ mytext += "<div class=\"left-align " + elem.data('lngtxtstyle') + "\" style=\"margin:4px 10px;\"\">" + elem.getReading('Warn_'+i+'_'+spalte).val;}
+							if (spalte == 'WarnTime'){ mytext += elem.data('textdivider') + "G&uuml;ltig vom " + elem.getReading('Warn_'+i+'_Start_Date').val + " " + elem.getReading('Warn_'+i+'_Start_Time').val + " Uhr bis "+ elem.getReading('Warn_'+i+'_End_Date').val + " " + elem.getReading('Warn_'+i+'_End_Time').val + " Uhr.";}				
+						});
+						mytext += "</div></div></div>";
+					}
+				}
+				if(elem.data('swiperstyle') == 'yes'){
+					alert("swiper yes");
+					mytext += "<div class=\"swiper-container\">";
+					mytext += "<div class=\"swiper-wrapper\">";
 				
-				for (var i = 0; i <= count; i++) {
-					if (typeof elem.getReading('WarnUWZLevel_Color').val != "undefined") { 
-						var colortranslation;
-						colortranslation = colormap[elem.getReading('WarnUWZLevel_Color').val];
-						while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}
-						mytext += "<div class=\"hbox\" style=\"display:inline-block;margin:2px 8px;border-radius:4px;color:"+elem.data('fontcolor')+";background-color:"+colortranslation +";\">"; }
-					else if (typeof elem.getReading('Warn_'+i+'_uwzLevel').val != "undefined"){ 
-						var colortranslation;
-						colortranslation = colormap[elem.getReading('Warn_'+i+'_uwzLevel').val];
-						while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}				
-						mytext += "<div class=\"hbox cell\" style=\"display:inline-block;margin:4px;border-radius:4px;color:"+elem.data('fontcolor')+";background-color:"+colortranslation +";\">"; }
-					else { mytext += "<div class=\"hbox\">"; }
-									
-					elem.data('detail').forEach(function(spalte) {
-						if (spalte == 'IconURL'){ mytext += "<div class=\"\" style=\"margin:4px 10px;\"><img src=\"" + elem.getReading('Warn_'+i+'_'+spalte).val + "\" width=\""+elem.data('imgsize')+"\" height=\""+elem.data('imgsize')+"\ class=\"centered\"></div>"; }
-						if (spalte == 'ShortText'){ mytext += "<div class=\"left-align " + elem.data('shttxtstyle') + "\" style=\"margin:4px 10px;\"\">" + elem.getReading('Warn_'+i+'_'+spalte).val ;}
-						if (spalte == 'LongText'){ mytext += "<div class=\"left-align " + elem.data('lngtxtstyle') + "\" style=\"margin:4px 10px;\"\">" + elem.getReading('Warn_'+i+'_'+spalte).val;}
-						if (spalte == 'WarnTime'){ mytext += elem.data('textdivider') + "Gültig vom " + elem.getReading('Warn_'+i+'_Start_Date').val + " " + elem.getReading('Warn_'+i+'_Start_Time').val + " Uhr bis "+ elem.getReading('Warn_'+i+'_End_Date').val + " " + elem.getReading('Warn_'+i+'_End_Time').val + " Uhr.";}				
-					});
-					mytext += "</div></div></div>";
+					//one swiper elem
+					for (var i = 0; i <= count; i++) {
+						mytext += "<div class=\"swiper-slide\" data-hash=\"slide"+i+"\">";
+						if (typeof elem.getReading('WarnUWZLevel_Color').val != "undefined") { 
+							var colortranslation;
+							colortranslation = colormap[elem.getReading('WarnUWZLevel_Color').val];
+							while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}
+							mytext += "<div class=\"hbox\" style=\"display:inline-block;margin:2px 8px;border-radius:4px;color:"+elem.data('fontcolor')+";background-color:"+colortranslation +";\">"; }
+						else if (typeof elem.getReading('Warn_'+i+'_uwzLevel').val != "undefined"){ 
+							var colortranslation;
+							colortranslation = colormap[elem.getReading('Warn_'+i+'_uwzLevel').val];
+							while (typeof mapped != "undefined" && !mapped.match(/^:/)) { colortranslation = colormap[mapped];}				
+							mytext += "<div class=\"hbox cell\" style=\"display:inline-block;margin:4px;border-radius:4px;color:"+elem.data('fontcolor')+";background-color:"+colortranslation +";\">"; }
+						else { mytext += "<div class=\"hbox\">"; }
+										
+						elem.data('detail').forEach(function(spalte) {
+							if (spalte == 'IconURL'){ mytext += "<div class=\"\" style=\"margin:4px 10px;\"><img src=\"" + elem.getReading('Warn_'+i+'_'+spalte).val + "\" width=\""+elem.data('imgsize')+"\" height=\""+elem.data('imgsize')+"\ class=\"centered\"></div>"; }
+							if (spalte == 'ShortText'){ mytext += "<div class=\"left-align " + elem.data('shttxtstyle') + "\" style=\"margin:4px 10px;\"\">" + elem.getReading('Warn_'+i+'_'+spalte).val ;}
+							if (spalte == 'LongText'){ mytext += "<div class=\"left-align " + elem.data('lngtxtstyle') + "\" style=\"margin:4px 10px;\"\">" + elem.getReading('Warn_'+i+'_'+spalte).val;}
+							if (spalte == 'WarnTime'){ mytext += elem.data('textdivider') + "Gültig vom " + elem.getReading('Warn_'+i+'_Start_Date').val + " " + elem.getReading('Warn_'+i+'_Start_Time').val + " Uhr bis "+ elem.getReading('Warn_'+i+'_End_Date').val + " " + elem.getReading('Warn_'+i+'_End_Time').val + " Uhr.";}				
+						});
+						//close normal uwz style
+						mytext += "</div></div></div>";
+						//close swiper elem
+						mytext += "</div>";
+					}
+					mytext += "</div>";
+					mytext += "</div>";
 				}
 			}
 			else { mytext += "<div class=\"cell top-space\">Aktuell keine Warnmeldungen.</div>"; }		
