@@ -27,10 +27,12 @@ var Modul_calview = function () {
             elem.initData('get', 'STATE');
             elem.initData('start', 'all');
             elem.initData('color', '');
-            elem.initData('detail', ["bdate", "btime","bdatetimeiso", "summary", "location","edate","etime","edatetimeiso","source","age","description","daysleft","daysleftLong"]);
+			elem.initData('class', '');
+            elem.initData('detail', ["bdate", "btime","bdatetimeiso","timeshort","summary", "location","edate","etime","edatetimeiso","source","sourcecolor","age","description","daysleft","daysleftLong"]);
 			elem.initData('detailwidth', []);
 			elem.initData('dateformat', 'long');
 			elem.initData('timeformat', 'long');
+			elem.initData('sourcecolor', 'no');
             elem.initData('showempty', 'true');
 			elem.initData('swiperstyle', 'no');
 		
@@ -58,6 +60,7 @@ var Modul_calview = function () {
                         me.addReading(elem, wann + '_' + num + '_' + wert);
                         console.log(wann + '_' + num + '_' + wert + ': ' + elem.getReading(wann + '_' + num + '_' + wert).val);
                     });
+					//elem.initData(wann + '_' + num + '_sourcecolor', wann + '_' + num + '_sourcecolor');
                 }
             }
         });
@@ -71,8 +74,7 @@ var Modul_calview = function () {
 			var mytext = "";
 			var num;
             var color = elem.data('color');
-            elem.css("color", ftui.getStyle('.' + color, 'color') || color);
-			
+            elem.css("color", ftui.getStyle('.' + color, 'color') || color);			
 			elem.getReading('c-term').val;
             elem.getReading('c-today').val;
             elem.getReading('c-tomorrow').val;
@@ -114,19 +116,20 @@ var Modul_calview = function () {
 								mytext += "<div class=\"hbox cell\">";
 								elem.data('detail').forEach(function(spalte) {
 									if ( typeof elem.getReading(readingPrefix+'_'+num+'_'+spalte).val != "undefined" ) {
-										//alert(elem.data('detailwidth')[mycount]);
-										if(spalte == 'bdate'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
-										if(spalte == 'btime'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
-										if(spalte == 'bdatetimeiso'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'summary'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'location'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'edate'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
-										if(spalte == 'etime'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
-										if(spalte == 'edatetimeiso'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'source'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'description'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'daysleft'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'daysleftLong'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(elem.data('sourcecolor') == 'yes'){color = elem.getReading(readingPrefix+'_'+num+'_sourcecolor').val;}
+										if(spalte == 'bdate'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
+										if(spalte == 'btime'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
+										if(spalte == 'bdatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'timeshort'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'summary'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'location'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'edate'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
+										if(spalte == 'etime'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
+										if(spalte == 'edatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'source'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'description'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'daysleft'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'daysleftLong'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										mycount++;
 									}
 									
@@ -138,9 +141,11 @@ var Modul_calview = function () {
 								mytext += "<div class=\"hbox cell\">";
 								elem.data('detail').forEach(function(spalte) {
 									if ( typeof elem.getReading(readingPrefix+'_'+num+'_'+spalte).val != "undefined" ) {
+										if(elem.data('sourcecolor') == 'yes'){color = elem.getReading(readingPrefix+'_'+num+'_sourcecolor').val; }
 										if(spalte == 'bdate'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
 										if(spalte == 'btime'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
 										if(spalte == 'bdatetimeiso'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'timeshort'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										if(spalte == 'summary'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										if(spalte == 'location'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										if(spalte == 'edate'){mytext += "<div data-type=\"label\" class=\"\" style=\"color:"+color+";width:"+$width+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
