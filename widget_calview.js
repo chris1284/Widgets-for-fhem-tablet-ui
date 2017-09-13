@@ -3,6 +3,8 @@
 // Modifications for 2.4 mario stephan	2.12.2016
 // Modifications for 2.6 chris1284 08.12.2016 - Ursprüngliche Darstellung wieder hergestellt
 // Modifications for 2.8 chris1284 28.12.2016 - widget an aktuelle calview angepasst
+// Modifications / user wishes chris1284 13.09.2017
+
 // data-get			all|today|tomorrow 
 // data-start		none|notoday|notomorrow		(only for data-get="all" -> dont show Entrys from today or today and tomorrow)
 // data-max			number how much Entries are maximal listed
@@ -35,7 +37,9 @@ var Modul_calview = function () {
 			elem.initData('sourcecolor', 'no');
             elem.initData('showempty', 'true');
 			elem.initData('swiperstyle', 'no');
-		
+			elem.initData('onelinesum', 'no');
+			elem.initData('onelinedesc', 'no');
+			
             var device = $(this).data('device');
             console.log("device: " + device + " get: " + $(this).data('get') + " max: " + $(this).data('max'));
             if ($(this).data('get') == 'today' || $(this).data('get') == 'tomorrow' || $(this).data('get') == 'all') {
@@ -111,6 +115,12 @@ var Modul_calview = function () {
 							else {datesubstr = 10;}
 							if (elem.data('timeformat') == 'short'){ timesubstr = 5;}
 							else {timesubstr = 8;}
+							var onelinesum = "";
+							if (elem.data('onelinesum') === "yes") { onelinesum = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";}
+							var onelinedesc   = "";
+							if (elem.data('onelinedesc') === "yes") { onelinedesc = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";}
+							var onelineloc   = "";
+							if (elem.data('onelineloc') === "yes") { onelineloc = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";}
 							if(elem.data('detailwidth').length > 0) {
 								//alert(elem.data('detailwidth').length);
 								mytext += "<div class=\"hbox cell\">";
@@ -121,13 +131,13 @@ var Modul_calview = function () {
 										if(spalte == 'btime'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
 										if(spalte == 'bdatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										if(spalte == 'timeshort'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'summary'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'location'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'summary'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinesum+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'location'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelineloc+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										if(spalte == 'edate'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
 										if(spalte == 'etime'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
 										if(spalte == 'edatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										if(spalte == 'source'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'description'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'description'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinedesc+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										if(spalte == 'daysleft'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										if(spalte == 'daysleftLong'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										mycount++;
