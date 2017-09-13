@@ -4,7 +4,7 @@
 // Modifications for 2.6 chris1284 08.12.2016 - Ursprüngliche Darstellung wieder hergestellt
 // Modifications for 2.8 chris1284 28.12.2016 - widget an aktuelle calview angepasst
 // Modifications / user wishes chris1284 13.09.2017
-
+// Modifications chris1284 13.09.2017 19:05 - nur noch oneline yes/no , onlinesum/desc/loc entfernt)
 // data-get			all|today|tomorrow 
 // data-start		none|notoday|notomorrow		(only for data-get="all" -> dont show Entrys from today or today and tomorrow)
 // data-max			number how much Entries are maximal listed
@@ -37,8 +37,7 @@ var Modul_calview = function () {
 			elem.initData('sourcecolor', 'no');
             elem.initData('showempty', 'true');
 			elem.initData('swiperstyle', 'no');
-			elem.initData('onelinesum', 'no');
-			elem.initData('onelinedesc', 'no');
+			elem.initData('oneline', 'no');
 			
             var device = $(this).data('device');
             console.log("device: " + device + " get: " + $(this).data('get') + " max: " + $(this).data('max'));
@@ -121,25 +120,27 @@ var Modul_calview = function () {
 							if (elem.data('onelinedesc') === "yes") { onelinedesc = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";}
 							var onelineloc   = "";
 							if (elem.data('onelineloc') === "yes") { onelineloc = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";}
+							var onelinestyle   = "";
+							if (elem.data('oneline') === "yes") { onelinestyle = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";}
 							if(elem.data('detailwidth').length > 0) {
 								//alert(elem.data('detailwidth').length);
-								mytext += "<div class=\"hbox cell\">";
+								mytext += "<div class=\"hbox cell\" style=\"height:auto;\">";
 								elem.data('detail').forEach(function(spalte) {
 									if ( typeof elem.getReading(readingPrefix+'_'+num+'_'+spalte).val != "undefined" ) {
 										if(elem.data('sourcecolor') == 'yes'){color = elem.getReading(readingPrefix+'_'+num+'_sourcecolor').val;}
-										if(spalte == 'bdate'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
-										if(spalte == 'btime'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
-										if(spalte == 'bdatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'timeshort'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'summary'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinesum+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'location'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelineloc+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'edate'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
-										if(spalte == 'etime'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
-										if(spalte == 'edatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'source'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'description'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinedesc+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'daysleft'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
-										if(spalte == 'daysleftLong'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'bdate'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
+										if(spalte == 'btime'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
+										if(spalte == 'bdatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'timeshort'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'summary'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'location'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'edate'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
+										if(spalte == 'etime'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
+										if(spalte == 'edatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'source'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'description'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'daysleft'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'daysleftLong'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										mycount++;
 									}
 									
