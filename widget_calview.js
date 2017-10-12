@@ -129,6 +129,7 @@ var Modul_calview = function () {
 								elem.data('detail').forEach(function(spalte) {
 									if ( typeof elem.getReading(readingPrefix+'_'+num+'_'+spalte).val != "undefined" ) {
 										if(elem.data('sourcecolor') == 'yes'){color = elem.getReading(readingPrefix+'_'+num+'_sourcecolor').val;}
+										if(spalte == 'age'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
 										if(spalte == 'bdate'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, datesubstr) + "</div>";}
 										if(spalte == 'btime'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val.substr(0, timesubstr) + "</div>";}
 										if(spalte == 'bdatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
