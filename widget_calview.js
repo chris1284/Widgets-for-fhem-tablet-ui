@@ -31,7 +31,7 @@ var Modul_calview = function () {
             elem.initData('start', 'all');
             elem.initData('color', '');
 			elem.initData('class', '');
-            elem.initData('detail', ["bdate", "btime","bdatetimeiso","timeshort","summary", "location","edate","etime","edatetimeiso","source","sourcecolor","age","description","daysleft","daysleftLong","weekdayname"]);
+            elem.initData('detail', ["bdate", "btime","bdatetimeiso","timeshort","summary", "location","edate","etime","edatetimeiso","source","sourcecolor","age","description","categories","daysleft","daysleftLong","weekdayname"]);
 			elem.initData('detailwidth', []);
 			elem.initData('dateformat', 'long');
 			elem.initData('timeformat', 'long');
@@ -141,6 +141,7 @@ var Modul_calview = function () {
 										if(spalte == 'edatetimeiso'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										if(spalte == 'source'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										if(spalte == 'description'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
+										if(spalte == 'categories'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										if(spalte == 'daysleft'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										if(spalte == 'daysleftLong'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
 										if(spalte == 'weekdayname'){mytext += "<div data-type=\"label\" class=\""+elem.data('class')+"\" style=\"color:"+color+";width:"+elem.data('detailwidth')[mycount]+"%;"+onelinestyle+"\">" + elem.getReading(readingPrefix+'_'+num+'_'+spalte).val + "</div>";}
