@@ -1,7 +1,8 @@
-// widget_uwz last changed 2017-11-17 17:00:00 by chris1284
+// widget_uwz last changed 2018-01-28 17:00:00 by chris1284
 //-------------------------------------------------------------------
 //-------------------------------------------------------------------
-
+//	2018-01-28	added data-hide
+//
 "use strict";
 function depends_uwz() {
     var deps = ["lib/swiper.jquery.min.js"];
@@ -172,6 +173,8 @@ var Modul_uwz = function () {
 			}
 			else { mytext += "<div class=\"cell top-space\">Aktuell keine Warnmeldungen.</div>"; }		
 			elem.html(mytext);
+			//extra reading for hide
+			me.update_hide(dev, par);
 		});
 		
 	};
