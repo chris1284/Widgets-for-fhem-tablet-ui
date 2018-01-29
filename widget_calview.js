@@ -6,6 +6,7 @@
 // Modifications / user wishes chris1284 13.09.2017
 // Modifications chris1284 13.09.2017 19:05 - nur noch oneline yes/no , onlinesum/desc/loc entfernt)
 // Modifications chris1284 11.10.2017 - new reading weekdayname 
+// Modifications chris1284 29.01.2018 - fixed showempty 
 // data-get			all|today|tomorrow 
 // data-start		none|notoday|notomorrow		(only for data-get="all" -> dont show Entrys from today or today and tomorrow)
 // data-max			number how much Entries are maximal listed
@@ -98,7 +99,7 @@ var Modul_calview = function () {
                 if (elem.data('start') == "notoday") { beginn = 1 + parseInt(elem.getReading('c-today').val); } 
 				else if (elem.data('start') == "notomorrow") { beginn = 1 + parseInt(elem.getReading('c-today').val) + parseInt(elem.getReading('c-tomorrow').val); }
                 
-                if (count === 0) {
+                if (count == 0) {
                     if (elem.data('showempty') == "true") {
                         mytext += "<div data-type=\"label\">" + zeitrahmen[readingPrefix] + "keine Termine</div>";
                     }
